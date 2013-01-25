@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>uk.ac.dotrural.irp</groupId>
+	<artifactId>ecosystem.timetable</artifactId>
+	<version>0.1-SNAPSHOT</version>
+	
+	<dependencies>
+		<dependency>
+			<groupId>uk.ac.dotrural.irp</groupId>
+			<artifactId>ecosystem.core</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+			<type>jar</type>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>uk.me.jstott</groupId>
+			<artifactId>jcoord</artifactId>
+			<version>1.0</version>
+		</dependency>
+		<dependency>
+			<groupId>com.jcraft</groupId>
+			<artifactId>jsch</artifactId>
+			<version>0.1.48</version>
+		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.10</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-net</groupId>
+			<artifactId>commons-net</artifactId>
+			<version>20030805.205232</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.jena</groupId>
+			<artifactId>jena-fuseki</artifactId>
+			<version>0.2.5-SNAPSHOT</version>
+		</dependency>
+	</dependencies>
+
+	<properties>
+		<jetty.version>6.1.18</jetty.version>
+	</properties>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.mortbay.jetty</groupId>
+				<artifactId>maven-jetty-plugin</artifactId>
+				<version>${jetty.version}</version>
+				<configuration>
+					<systemProperties>
+						<systemProperty>
+							<name>http.proxyHost</name>
+							<value>proxy.abdn.ac.uk</value>
+						</systemProperty>
+						<systemProperty>
+							<name>http.proxyPort</name>
+							<value>8080</value>
+						</systemProperty>
+					</systemProperties>
+					<reload>manual</reload>
+					<stopKey>stop</stopKey>
+					<stopPort>9966</stopPort>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+	
+	<repositories>
+		<repository>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+			<id>MVNRepository</id>
+			<name>MVNRepository</name>
+			<url>http://mvnrepository.com/artifact</url>
+		</repository>
+		<repository>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+			<id>apache snapshots</id>
+			<name>apache snapshots</name>
+			<url>https://repository.apache.org/content/repositories/snapshots/</url>
+		</repository>
+		<repository>
+			<id>internal</id>
+			<name>Archiva Managed Internal Repository</name>
+			<url>http://dtp-82.sncs.abdn.ac.uk:8081/archiva/repository/internal/</url>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</repository>
+		<repository>
+			<id>snapshots</id>
+			<name>Archiva Managed Snapshot Repository</name>
+			<url>http://dtp-82.sncs.abdn.ac.uk:8081/archiva/repository/snapshots/</url>
+			<releases>
+				<enabled>false</enabled>
+			</releases>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</repository>
+	</repositories>
+	
+	
+	<distributionManagement>
+		<repository>
+			<id>internal</id>
+			<url>http://dtp-82.sncs.abdn.ac.uk:8081/archiva/repository/internal/</url>
+		</repository>
+		<snapshotRepository>
+			<id>snapshots</id>
+			<url>http://dtp-82.sncs.abdn.ac.uk:8081/archiva/repository/snapshots/</url>
+		</snapshotRepository>
+	</distributionManagement>
+</project>
