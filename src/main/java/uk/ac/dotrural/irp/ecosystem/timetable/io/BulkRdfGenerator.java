@@ -42,33 +42,37 @@ public class BulkRdfGenerator {
 		String atcoDirectory = base + "cif";
 
 		BulkTimetableImporter importer = new BulkTimetableImporter();
-		RouteWayMapBuilder mapBuilder = new RouteWayMapBuilder();
-		Map<Integer, OsmRouteWayMap> tripRouteMappings = importer
-				.readRouteMappings(mappingFile, mapBuilder);
-		AtcoCifParser atcoParser = new AtcoCifParser();
-		// borders area code is 115
-		importer.importTimetables(tripRouteMappings, atcoDirectory, atcoParser,
-				osmMapFile, "115", Constants.routeBase, mapBuilder);
+//		RouteWayMapBuilder mapBuilder = new RouteWayMapBuilder();
+//		Map<Integer, OsmRouteWayMap> tripRouteMappings = importer
+//				.readRouteMappings(mappingFile, mapBuilder);
+//		AtcoCifParser atcoParser = new AtcoCifParser();
+//		// borders area code is 115
+//		importer.importTimetables(tripRouteMappings, atcoDirectory, atcoParser,
+//				osmMapFile, "115", Constants.routeBase, mapBuilder);
 
 		BulkRdfGenerator brg = new BulkRdfGenerator();
-		
 
-		brg.generateBusStopRdf("timetable",
-				"resources/bordersTest/rdf/timetable");
+//		brg.generateBusStopRdf("timetable",
+//				"resources/bordersTest/rdf/timetable");
+//		System.out.println("...");
+//		brg.generateVirtualStopRdf("timetable",
+//				"resources/bordersTest/rdf/timetable", atcoParser.getRoutes());
+//		System.out.println("...");
+//		brg.generateTimetableRdf("timetable",
+//				"resources/bordersTest/rdf/timetable", atcoParser);
+
+		brg.generateKmlRdf("timetable", "resources/bordersTest/rdf/timetable",
+				"resources/bordersTest/RouteKmlMappings.txt",
+				"http://107.20.159.169/GetThere/kml/");
 		System.out.println("...");
-		brg.generateVirtualStopRdf("timetable",
-				"resources/bordersTest/rdf/timetable", atcoParser.getRoutes());
-		System.out.println("...");
-		brg.generateTimetableRdf("timetable",
-				"resources/bordersTest/rdf/timetable", atcoParser);
-		
-		
-		brg.generateOsmRdf("mapnodes", "resources/bordersTest/rdf/nodes", importer.getNodeMaps());
-		System.out.println("...");
-		brg.generateMapRdf("mapnodes", "resources/bordersTest/rdf/nodes",
-				importer.getNodeMaps());
-		System.out.println("...");
-		
+
+//		brg.generateOsmRdf("mapnodes", "resources/bordersTest/rdf/nodes",
+//				importer.getNodeMaps());
+//		System.out.println("...");
+//		brg.generateMapRdf("mapnodes", "resources/bordersTest/rdf/nodes",
+//				importer.getNodeMaps());
+//		System.out.println("...");
+
 	}
 
 	private void displayUpdates(Collection<String> updates) {
@@ -84,16 +88,17 @@ public class BulkRdfGenerator {
 		this.lrg = new LocationRdfGenerator();
 	}
 
-	public void generateOsmRdf(String modelName, String tdbStoreLocation, List<OsmRouteNodeMap> maps) {
+	public void generateOsmRdf(String modelName, String tdbStoreLocation,
+			List<OsmRouteNodeMap> maps) {
 		OsmRdfGenerator generator = new OsmRdfGenerator();
 		Set<OsmNode> nodes = new HashSet<OsmNode>();
-		for (OsmRouteNodeMap map : maps){
+		for (OsmRouteNodeMap map : maps) {
 			nodes.addAll(map.getNodes());
 		}
-		Collection<String> updates = generator.generateUpdatesForNodes(
-				nodes, Constants.nodesBase);
-//		updates.addAll(generator.generateUpdatesForWays(OsmWay.getWays(),
-//				Constants.waysBase, Constants.nodesBase));
+		Collection<String> updates = generator.generateUpdatesForNodes(nodes,
+				Constants.nodesBase);
+		// updates.addAll(generator.generateUpdatesForWays(OsmWay.getWays(),
+		// Constants.waysBase, Constants.nodesBase));
 		createModel(modelName, updates, tdbStoreLocation);
 	}
 
@@ -150,7 +155,7 @@ public class BulkRdfGenerator {
 			}
 		}
 
-//		 displayUpdates(updates);
+		// displayUpdates(updates);
 		createModel(modelName, updates, tdbStoreLocation);
 	}
 
@@ -175,8 +180,17 @@ public class BulkRdfGenerator {
 			updates.addAll(generator.generateSparqlUpdates(
 					parser.getOperators(), service));
 		}
-//		displayUpdates(updates);
+		// displayUpdates(updates);
 		createModel(modelName, updates, tdbStoreLocation);
+	}
+
+	public void generateKmlRdf(String modelName, String tdbStoreLocation,
+			String mappingFile, String remoteKmlBase) throws IOException {
+		KmlRdfGenerator gen = new KmlRdfGenerator();
+		Collection<String> updates = gen.generatedUpdatesFor(mappingFile,
+				Constants.kmlBase, Constants.routeBase, remoteKmlBase);
+		displayUpdates(updates);
+//		createModel(modelName, updates, tdbStoreLocation);
 	}
 
 }
