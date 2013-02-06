@@ -111,7 +111,7 @@ public class ServiceMapMatcher {
 	public SegmentDistance mapToRouteFromJourney(Point point,
 			double marginOfError, String journeyUri, String journeyEndpoint,
 			String nodesEndpoint) {
-		System.out.println("starting mapping");
+		//System.out.println("starting mapping");
 		Collection<Segment> candidateSegments = getSegmentsWithinFromJourney(
 				point, marginOfError, journeyUri, journeyEndpoint,
 				nodesEndpoint);
@@ -119,7 +119,7 @@ public class ServiceMapMatcher {
 			System.out.println("no candidate segments");
 			return null;
 		}
-		System.out.println("candidate segments " + candidateSegments);
+	//	System.out.println("candidate segments " + candidateSegments);
 		MapMatcher matcher = new MapMatcher();
 		return matcher.mapSegments(point, candidateSegments);
 	}
