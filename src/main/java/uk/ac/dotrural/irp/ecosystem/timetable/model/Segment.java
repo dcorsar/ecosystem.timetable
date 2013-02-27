@@ -25,6 +25,11 @@ public class Segment {
 		this.to = to;
 	}
 
+        @Override public String toString() {
+            return "from: " + String.valueOf(from) +
+                   "; to: " + String.valueOf(to);
+        }
+
 	
 	
 }

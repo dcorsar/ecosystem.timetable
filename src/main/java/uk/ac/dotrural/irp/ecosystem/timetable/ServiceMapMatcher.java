@@ -124,7 +124,7 @@ public class ServiceMapMatcher {
 		return matcher.mapSegments(point, candidateSegments);
 	}
 
-	private Collection<Segment> getSegmentsWithinFromJourney(Point point,
+        private Collection<Segment> getSegmentsWithinFromJourney(Point point,
 			double marginOfError, String journeyUri, String journeyEndpoint,
 			String nodesEndpoint) {
 		String journeyQ = String.format(getJourneyQuery, journeyUri);
@@ -175,7 +175,7 @@ public class ServiceMapMatcher {
 	private Collection<Segment> getSegmentsWithin(Point point,
 			double marginOfError, String serviceUri, String direction,
 			String nodesEndpoint) {
-		Map<Integer, OsmNode> nodes = getNodesWtihin(point.getEasting(),
+		Map<Integer, OsmNode> nodes = getNodesWithin(point.getEasting(),
 				point.getNorthing(), marginOfError, serviceUri, direction,
 				nodesEndpoint);
 		Collection<Segment> candidateSegments = new LinkedList<Segment>();
@@ -293,7 +293,7 @@ public class ServiceMapMatcher {
 			+ "filter (((abs(\"%s\"^^xsd:double - ?easting)) <= \"%s\"^^xsd:double) && ((abs(\"%s\"^^xsd:double  - ?northing)) <=\"%s\"^^xsd:double) ) ."
 			+ "} order by ?sequenceNumber";
 
-	private Map<Integer, OsmNode> getNodesWtihin(double easting,
+	private Map<Integer, OsmNode> getNodesWithin(double easting,
 			double northing, double marginOfError, String serviceUri,
 			String direction, String nodesEndpoint) {
 		Map<Integer, OsmNode> nodes = new TreeMap<Integer, OsmNode>();

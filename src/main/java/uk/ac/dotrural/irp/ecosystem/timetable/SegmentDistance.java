@@ -11,9 +11,9 @@ public class SegmentDistance implements Comparator<SegmentDistance>,
 	double distance;
 	Point mappedPoint;
 
-	public String toString() {
-		return Double.toString(distance);
-	}
+//	public String toString() {
+//		return Double.toString(distance);
+//	}
 
 	public int compare(SegmentDistance o1, SegmentDistance o2) {
 		return (o1.distance == o2.distance) ? 0
@@ -48,4 +48,10 @@ public class SegmentDistance implements Comparator<SegmentDistance>,
 	public void setMappedPoint(Point mappedPoint) {
 		this.mappedPoint = mappedPoint;
 	}
+
+        @Override public String toString() {
+            return "distance: " + Double.toString(distance) +
+                    "; mappedPoint: " + mappedPoint +
+                    "; segment: [" + segment + "]";
+        }
 }
