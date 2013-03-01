@@ -26,8 +26,8 @@ public class Segment {
 	}
 
         @Override public String toString() {
-            return "from: " + String.valueOf(from) +
-                   "; to: " + String.valueOf(to);
+            return "from: [" + from + "]" +
+                   "; to: [" + to + "]";
         }
 
 	

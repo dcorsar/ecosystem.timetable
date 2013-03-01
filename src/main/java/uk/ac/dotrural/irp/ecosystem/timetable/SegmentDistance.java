@@ -51,7 +51,7 @@ public class SegmentDistance implements Comparator<SegmentDistance>,
 
         @Override public String toString() {
             return "distance: " + Double.toString(distance) +
-                    "; mappedPoint: " + mappedPoint +
+                    "; mappedPoint: [" + mappedPoint + "]" +
                     "; segment: [" + segment + "]";
         }
 }

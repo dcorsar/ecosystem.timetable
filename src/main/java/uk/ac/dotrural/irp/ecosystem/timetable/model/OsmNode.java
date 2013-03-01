@@ -125,7 +125,8 @@ public class OsmNode extends Point {
 
 	@Override
 	public String toString() {
-		return "OsmNode [id=" + id + "]";
+		return super.toString() +
+                        "; OsmNode [id=" + id + "]";
 	}
 
 	public static void clearNodes() {
