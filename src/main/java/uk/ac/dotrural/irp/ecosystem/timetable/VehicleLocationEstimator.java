@@ -12,6 +12,24 @@ import uk.ac.dotrural.irp.ecosystem.timetable.model.cif.StopTimingPoint;
 
 public class VehicleLocationEstimator {
 
+        /**
+         *
+         * @param
+         * @return
+         */
+        public EstimatedLocationPoint estimateLocationAtTime(Point observedPoint, double observedSpeed, long observedTime, long targetTime) {
+            System.out.println();
+            System.out.println("estimateLocationAtTime:");
+            System.out.println("\tobservedPoint: " + observedPoint);
+            System.out.println("\tobservedSpeed:" + observedSpeed);
+            System.out.println("\tobservedTime:" + observedTime);
+            System.out.println("\ttargetTime:" + targetTime);
+            // need segments
+            System.out.println();
+
+            return null;
+        }
+        
 	/**
 	 * Estimates
 	 * 
