@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import uk.ac.dotrural.irp.ecosystem.timetable.model.EstimatedLocationPoint;
-import uk.ac.dotrural.irp.ecosystem.timetable.model.GeographicFeature;
 import uk.ac.dotrural.irp.ecosystem.timetable.model.Point;
 import uk.ac.dotrural.irp.ecosystem.timetable.model.Segment;
 import uk.ac.dotrural.irp.ecosystem.timetable.model.TimingPoint;
@@ -17,17 +16,36 @@ public class VehicleLocationEstimator {
          * @param
          * @return
          */
-        public EstimatedLocationPoint estimateLocationAtTime(Point observedPoint, double observedSpeed, long observedTime, long targetTime) {
-            System.out.println();
-            System.out.println("estimateLocationAtTime:");
-            System.out.println("\tobservedPoint: " + observedPoint);
-            System.out.println("\tobservedSpeed:" + observedSpeed);
-            System.out.println("\tobservedTime:" + observedTime);
-            System.out.println("\ttargetTime:" + targetTime);
-            // need segments
-            System.out.println();
+        public EstimatedLocationPoint estimateLocationAtTime(Point observedPoint, Segment observedSegment, List<Segment> journeySegments, double observedSpeed, long observedTime, long targetTime) {
+            final long time = targetTime - observedTime;
+            final double distanceTravelled = observedSpeed * (time/1000);
 
-            return null;
+            if (distanceTravelled == 0)
+                return new EstimatedLocationPoint(observedPoint, targetTime);
+
+            System.out.println("\t distanceTravelled: " + distanceTravelled);
+            System.out.println("\t observedSpeed:     " + observedSpeed);
+
+            List<Segment> remainingSegments = journeySegments.subList(journeySegments.indexOf(observedSegment), journeySegments.size());
+            Point currentPoint = observedPoint;
+            double remainingDistance = distanceTravelled;
+            for (Segment currentSegment : remainingSegments) {
+                double remainingThisSegment = Utils.calculateDistanceBetween(currentPoint, currentSegment.getTo().getPoint());
+
+                System.out.println("\t\t remainingDistance:    " + remainingDistance);
+                System.out.println("\t\t remainingThisSegment: " + remainingThisSegment);
+                System.out.println();
+                
+                if (remainingThisSegment > remainingDistance) {
+                    Point p = calculatePointFromAlongSegment(remainingDistance, currentPoint, currentSegment);
+                    return new EstimatedLocationPoint(p, targetTime);
+                } else {
+                    remainingDistance = remainingDistance - remainingThisSegment;
+                    currentPoint = currentSegment.getTo().getPoint();
+                }
+            }
+
+            throw new IllegalStateException("Bus has past end of route");
         }
         
 	/**

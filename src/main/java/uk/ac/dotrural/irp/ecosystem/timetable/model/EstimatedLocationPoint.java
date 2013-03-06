@@ -15,4 +15,11 @@ public class EstimatedLocationPoint extends TimingPoint {
 	public String getId() {
 		return id;
 	}
+
+        @Override public String toString() {
+            return "point: [" + super.getPoint() + "]" +
+                    "; time: " + super.getArrivalTime() +
+                    "; id: " + id;
+        }
+
 }

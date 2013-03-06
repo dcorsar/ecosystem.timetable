@@ -124,7 +124,8 @@ public class ServiceMapMatcher {
 		return matcher.mapSegments(point, candidateSegments);
 	}
 
-        private Collection<Segment> getSegmentsWithinFromJourney(Point point,
+        //FIXME private Collection<Segment> getSegmentsWithinFromJourney(Point point,
+        public List<Segment> getSegmentsWithinFromJourney(Point point,
 			double marginOfError, String journeyUri, String journeyEndpoint,
 			String nodesEndpoint) {
 		String journeyQ = String.format(getJourneyQuery, journeyUri);
@@ -155,7 +156,7 @@ public class ServiceMapMatcher {
 
 	public SegmentDistance mapToRoute(Point point, double marginOfError,
 			String serviceUri, String direction, String nodesEndpoint) {
-		Collection<Segment> candidateSegments = getSegmentsWithin(point,
+		List<Segment> candidateSegments = getSegmentsWithin(point,
 				marginOfError, serviceUri, direction, nodesEndpoint);
 		MapMatcher matcher = new MapMatcher();
 		return matcher.mapSegments(point, candidateSegments);
@@ -172,13 +173,13 @@ public class ServiceMapMatcher {
 		// ll.getLng(), ll.getLat()));
 	}
 
-	private Collection<Segment> getSegmentsWithin(Point point,
+	private List<Segment> getSegmentsWithin(Point point,
 			double marginOfError, String serviceUri, String direction,
 			String nodesEndpoint) {
 		Map<Integer, OsmNode> nodes = getNodesWithin(point.getEasting(),
 				point.getNorthing(), marginOfError, serviceUri, direction,
 				nodesEndpoint);
-		Collection<Segment> candidateSegments = new LinkedList<Segment>();
+		List<Segment> candidateSegments = new ArrayList<Segment>();
 		Collection<String> madeSegments = new HashSet<String>();
 		// now need to create segments for each of the candidate nodes, both to
 		// the node
