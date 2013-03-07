@@ -34,13 +34,12 @@ public class VehicleLocationEstimator {
 
                 System.out.println("\t\t remainingDistance:    " + remainingDistance);
                 System.out.println("\t\t remainingThisSegment: " + remainingThisSegment);
-                System.out.println();
                 
                 if (remainingThisSegment > remainingDistance) {
                     Point p = calculatePointFromAlongSegment(remainingDistance, currentPoint, currentSegment);
                     return new EstimatedLocationPoint(p, targetTime);
                 } else {
-                    remainingDistance = remainingDistance - remainingThisSegment;
+                    remainingDistance -= remainingThisSegment;
                     currentPoint = currentSegment.getTo().getPoint();
                 }
             }
