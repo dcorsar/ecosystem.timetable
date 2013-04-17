@@ -108,13 +108,9 @@ public class ServiceMapMatcher {
 		}
 	}
 
-	public SegmentDistance mapToRouteFromJourney(Point point,
-			double marginOfError, String journeyUri, String journeyEndpoint,
-			String nodesEndpoint) {
+        public SegmentDistance mapToRouteFromJourney(Point point, List<Segment> candidateSegments) {
 		//System.out.println("starting mapping");
-		Collection<Segment> candidateSegments = getSegmentsWithinFromJourney(
-				point, marginOfError, journeyUri, journeyEndpoint,
-				nodesEndpoint);
+
 		if (candidateSegments.size() == 0) {
 			System.out.println("no candidate segments");
 			return null;
@@ -124,8 +120,18 @@ public class ServiceMapMatcher {
 		return matcher.mapSegments(point, candidateSegments);
 	}
 
-        //FIXME private Collection<Segment> getSegmentsWithinFromJourney(Point point,
-        public List<Segment> getSegmentsWithinFromJourney(Point point,
+	public SegmentDistance mapToRouteFromJourney(Point point,
+			double marginOfError, String journeyUri, String journeyEndpoint,
+			String nodesEndpoint) {
+		//System.out.println("starting mapping");
+		List<Segment> candidateSegments = getSegmentsWithinFromJourney(
+				point, marginOfError, journeyUri, journeyEndpoint,
+				nodesEndpoint);
+
+                return mapToRouteFromJourney(point, candidateSegments);
+	}
+
+        private List<Segment> getSegmentsWithinFromJourney(Point point,
 			double marginOfError, String journeyUri, String journeyEndpoint,
 			String nodesEndpoint) {
 		String journeyQ = String.format(getJourneyQuery, journeyUri);
@@ -173,7 +179,7 @@ public class ServiceMapMatcher {
 		// ll.getLng(), ll.getLat()));
 	}
 
-	private List<Segment> getSegmentsWithin(Point point,
+	public List<Segment> getSegmentsWithin(Point point,
 			double marginOfError, String serviceUri, String direction,
 			String nodesEndpoint) {
 		Map<Integer, OsmNode> nodes = getNodesWithin(point.getEasting(),
