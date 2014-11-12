@@ -1,4 +1,4 @@
-ecosyste.timetable
+ecosystem.timetable
 =======================
 
 Utility programs for the dot.rural IRP ecosystem regarding handling timetables.
